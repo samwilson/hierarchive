@@ -1,4 +1,18 @@
 <?php
+/**
+ * This file is part of Hierarchive.
+ * 
+ * Hierarchive is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * Hierarchive is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more\
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with Hierarchive.  If not,
+ * see <http://www.gnu.org/licenses/>.
+ */
 
 /**
  * Try to load the config file.
@@ -30,7 +44,7 @@ define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('APPPATH', realpath('application') . DIRECTORY_SEPARATOR);
 define('MODPATH', realpath('vendor/modules') . DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath('vendor/system') . DIRECTORY_SEPARATOR);
-$skindir = "skins/$skin";
+$skindir = "skins/$skin/html";
 if (!file_exists($skindir))
 {
 	trigger_error("Unable to find skin '$skin'.", E_USER_ERROR);

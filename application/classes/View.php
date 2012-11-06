@@ -13,7 +13,9 @@ class View extends Kohana_View {
 	 */
 	public function set_filename($file)
 	{
-		if (($path = Kohana::find_file('skins/default/html', $file)) === FALSE)
+		$path = realpath(SKINPATH.$file.EXT);
+		
+		if ($path===FALSE)
 		{
 			throw new View_Exception('The requested view :file could not be found', array(
 				':file' => $file,

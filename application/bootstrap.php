@@ -115,7 +115,6 @@ Kohana::modules(array(
 	'database' => MODPATH . 'database', // Database access
 ));
 
-Kohana::$_paths = array(APPPATH, SYSPATH, DOCROOT, SKINPATH);
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

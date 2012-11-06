@@ -6,6 +6,6 @@
 		<?php echo HTML::style('css/base.css') ?>
 	</head>
 	<body>
-		
+		<?php echo $body ?>
 	</body>
 </html>

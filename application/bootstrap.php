@@ -90,7 +90,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url' => '/hierarchives/',
+	'base_url' => '/hierarchive/',
 	'cache_dir' => DOCROOT . 'tmp/cache',
 	'index_file' => '',
 ));
@@ -105,7 +105,7 @@ Kohana::$log->attach(new Log_File(DOCROOT . 'tmp/logs'));
  */
 Kohana::$config->attach(new Config_File);
 
-Cookie::$salt = $cookie_salt;
+Cookie::$salt = Hierarchive::$cookie_salt;
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.

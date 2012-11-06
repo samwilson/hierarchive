@@ -6,10 +6,10 @@ return array
 		(
 		'type' => 'MySQL',
 		'connection' => array(
-			'hostname' => DB_HOST,
-			'database' => DB_NAME,
-			'username' => DB_USER,
-			'password' => DB_PASS,
+			'hostname' => Hierarchive::$db_hostname,
+			'database' => Hierarchive::$db_database,
+			'username' => Hierarchive::$db_username,
+			'password' => Hierarchive::$db_password,
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',

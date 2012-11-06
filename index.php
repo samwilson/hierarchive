@@ -44,10 +44,10 @@ define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('APPPATH', realpath('application') . DIRECTORY_SEPARATOR);
 define('MODPATH', realpath('vendor/modules') . DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath('vendor/system') . DIRECTORY_SEPARATOR);
-$skindir = "skins/$skin/html";
+$skindir = "skins/".Hierarchive::$skin."/html";
 if (!file_exists($skindir))
 {
-	trigger_error("Unable to find skin '$skin'.", E_USER_ERROR);
+	trigger_error("Unable to find skin '".Hierarchive::$skin."'.", E_USER_ERROR);
 	exit();
 }
 define('SKINPATH', realpath($skindir) . DIRECTORY_SEPARATOR);

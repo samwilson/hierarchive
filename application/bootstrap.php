@@ -120,12 +120,12 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-Route::set('resource', '(<id>)', array(
-	'id' => '[0-9]*'
+Route::set('resource', '<id>(/<action>)', array(
+	'id' => '[0-9]+',
+	'action' => '(view|edit)',
 ))->defaults(array(
 	'controller' => 'resources',
 	'action' => 'view',
-	'id' => 1,
 ));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 		->defaults(array(

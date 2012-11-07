@@ -49,15 +49,24 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE KEY username (username)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS group_members (
+  group_id int(2) NOT NULL,
+  user_id int(6) NOT NULL,
+  PRIMARY KEY (group_id,user_id)
+) ENGINE=InnoDB;
+
 
 ALTER TABLE `groups`
   ADD CONSTRAINT groups_owner FOREIGN KEY (owner_id) REFERENCES `users` (id);
 
 ALTER TABLE `resource_permissions`
   ADD CONSTRAINT resource_permissions_group FOREIGN KEY (group_id) REFERENCES `groups` (id),
-  ADD CONSTRAINT resource_permissions_resource FOREIGN KEY (resource_id) REFERENCES resources (id),
-  ADD CONSTRAINT resource_permissions_permission FOREIGN KEY (permission_id) REFERENCES permissions (id);
+  ADD CONSTRAINT resource_permissions_resource FOREIGN KEY (resource_id) REFERENCES `resources` (id),
+  ADD CONSTRAINT resource_permissions_permission FOREIGN KEY (permission_id) REFERENCES `permissions` (id);
 
 ALTER TABLE `resources`
   ADD CONSTRAINT resources_parent FOREIGN KEY (parent_id) REFERENCES resources (id);
 
+ALTER TABLE `group_members`
+  ADD CONSTRAINT group_members_group FOREIGN KEY (group_id) REFERENCES `groups` (id),
+  ADD CONSTRAINT group_members_user FOREIGN KEY (user_id) REFERENCES `users` (id);

@@ -7,3 +7,6 @@
 [submodule "vendor/system"]
 	path = vendor/system
 	url = https://github.com/kohana/core.git
+[submodule "vendor/markdown"]
+	path = vendor/markdown
+	url = https://github.com/michelf/php-markdown.git

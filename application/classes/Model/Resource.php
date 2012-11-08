@@ -56,6 +56,24 @@ class Model_Resource extends Model {
 		return $this->parents;
 	}
 
+	public function save($in_data)
+	{
+		// TODO validate data
+		$data = array(
+			'title' => $in_data['title'],
+			'parent_id' => (is_numeric($in_data['parent_id'])) ? $in_data['parent_id'] : NULL,
+			'description' => $in_data['description'],
+		);
+		if ($this->loaded())
+		{
+			$query = DB::update('resources')->where('id', '=', $this->get_id());
+		} else
+		{
+			$query = DB::insert('resource');
+		}
+		$query->set($data)->execute();
+	}
+
 	public function loaded()
 	{
 		return $this->loaded;

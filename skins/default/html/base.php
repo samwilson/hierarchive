@@ -6,18 +6,16 @@
 		<?php echo HTML::style('skins/'.Hierarchive::$skin.'/css/base.css') ?>
 	</head>
 	<body>
-		<div id="header">
-			
-		</div>
 
 		<?php echo $body ?>
 
 		<div id="footer" class="noprint">
-			<hr />
+			
 			<ol>
 				<li>
 					This is
-					<a href="http://github.com/samwilson/hierarchive" title="Go to the Hierarchive homepage on Github">Hierarchive</a>.
+					<a href="http://github.com/samwilson/hierarchive" title="Go to the Hierarchive homepage on Github">Hierarchive</a>
+					<?php echo Hierarchive::$version ?>.
 				</li>
 				<li>
 					<a href="http://github.com/samwilson/hierarchive/issues/new">Report a problem</a>.

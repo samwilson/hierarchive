@@ -21,14 +21,25 @@ footer, header, hgroup, menu, nav, section {display:block }
 body { line-height:1; margin:1em 3em }
 blockquote, q { quotes: none }
 blockquote:before, blockquote:after,
-q:before, q:after { content: ''; content:none }
+q:before, q:after { content:''; content:none }
 table {border-collapse:collapse; border-spacing:0 }
+a { text-decoration:none }
+a:hover { text-decoration:underline }
 
-h1 { font-size:2em }
+h1 { font-size:2em; margin:0.3em }
+hr { border:1px solid #acd4f0 }
 
-ol.breadcrumbs li { display:inline-block; padding:0.4em; border:1px solid #efefef }
+ol.breadcrumbs { list-style-type:none; margin:0 0 0.3em 0 }
+ol.breadcrumbs li { display:inline-block }
 
-.resource-contents .resource { border:1px solid #acd4f0; padding:0.5em }
+.description { margin:0.3em }
 
+.resource { border:1px solid black }
+
+ol.resource-contents { list-style-type:none }
+ol.resource-contents .resource { border:0; padding:0.7em }
+ol.resource-contents .resource.row-a { background-color:#efefef }
 
 #footer { text-align:center; font-size:smaller }
+#footer ol { list-style-type:none; margin:1em 0 }
+#footer ol li { margin:0.2em }

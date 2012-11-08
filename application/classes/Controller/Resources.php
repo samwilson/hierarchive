@@ -2,6 +2,12 @@
 
 class Controller_Resources extends Controller_Base {
 
+	public function before()
+	{
+		parent::before();
+		require_once DOCROOT.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'markdown'.DIRECTORY_SEPARATOR.'markdown.php';
+	}
+	
 	public function action_view()
 	{
 		$id = $this->request->param('id');
@@ -27,7 +33,12 @@ class Controller_Resources extends Controller_Base {
 			$this->view->resource = new Model_Resource($id);
 		} else
 		{
-			exit('Not Found');
+			$this->view->resource = new Model_Resource();
+		}
+		if ($this->request->post('save'))
+		{
+			$this->view->resource->save($this->request->post());
+			$this->redirect(Route::url('resource', array('id' => $id), TRUE));
 		}
 	}
 

@@ -2,7 +2,7 @@
 
 class Hierarchive {
 
-	public static $version = 0.1;
+	public static $version = '0.0.1';
 
 	public static $cookie_salt = 'cookie-salt-here';
 

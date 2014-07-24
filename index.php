@@ -20,7 +20,7 @@
  * @see README.md
  */
 $config_filename = 'config.php';
-if (!file_exists($config_filename))
+if ( ! file_exists($config_filename))
 {
 	$msg = "Unable to load configuration from $config_filename";
 	trigger_error($msg, E_USER_ERROR);
@@ -42,15 +42,15 @@ error_reporting(E_ALL | E_STRICT);
 define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 // Define the absolute paths for configured directories
 define('APPPATH', realpath('application') . DIRECTORY_SEPARATOR);
-define('MODPATH', realpath('vendor/modules') . DIRECTORY_SEPARATOR);
-define('SYSPATH', realpath('vendor/system') . DIRECTORY_SEPARATOR);
-$skindir = "skins/".Hierarchive::$skin."/html";
-if (!file_exists($skindir))
-{
-	trigger_error("Unable to find skin '".Hierarchive::$skin."'.", E_USER_ERROR);
-	exit();
-}
-define('SKINPATH', realpath($skindir) . DIRECTORY_SEPARATOR);
+define('MODPATH', realpath('modules') . DIRECTORY_SEPARATOR);
+define('SYSPATH', realpath('vendor/kohana/core') . DIRECTORY_SEPARATOR);
+//$skindir = "skins/".Hierarchive::$skin."/html";
+//if (!file_exists($skindir))
+//{
+//	trigger_error("Unable to find skin '".Hierarchive::$skin."'.", E_USER_ERROR);
+//	exit();
+//}
+//define('SKINPATH', realpath($skindir) . DIRECTORY_SEPARATOR);
 
 /**
  * Define the start time of the application, used for profiling.
@@ -71,12 +71,38 @@ if (!defined('KOHANA_START_MEMORY'))
 // Bootstrap the application
 require APPPATH . 'bootstrap' . EXT;
 
-/**
- * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
- * If no source is specified, the URI will be automatically detected.
- */
-echo Request::factory(TRUE, array(), FALSE)
+if (PHP_SAPI == 'cli')
+{
+	/**
+	 * Include the Unit Test module and leave the rest to PHPunit.
+	 */
+	if (substr(basename($_SERVER['PHP_SELF']), 0, 7) == 'phpunit')
+	{
+		// Disable output buffering
+		if (($ob_len = ob_get_length()) !== FALSE)
+		{
+			// flush_end on an empty buffer causes headers to be sent. Only flush if needed.
+			if ($ob_len > 0) ob_end_flush();
+			else ob_end_clean();
+		}
+		Kohana::modules(Kohana::modules() + array('unittest' => MODPATH.'unittest'));
+		return; // Execution will be continued by phpunit
+	}
+
+	/*
+	 * Execute minion if this is a command line request.
+	 */
+	set_exception_handler(array('Minion_Exception', 'handler'));
+	Minion_Task::factory(Minion_CLI::options())->execute();
+} else
+{
+	/**
+	 * Otherwise, execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+	 * If no source is specified, the URI will be automatically detected.
+	 */
+	echo Request::factory(TRUE, array(), FALSE)
 		->execute()
 		->send_headers(TRUE)
 		->body();
+}
 

@@ -1,15 +1,14 @@
 <?php
-
+global $db_config;
 return array
 	(
 	'default' => array
 		(
-		'type' => 'MySQL',
+		'type' => 'PDO',
 		'connection' => array(
-			'hostname' => Hierarchive::$db_hostname,
-			'database' => Hierarchive::$db_database,
-			'username' => Hierarchive::$db_username,
-			'password' => Hierarchive::$db_password,
+			'dsn' => 'mysql:host='.$db_config['hostname'].';dbname='.$db_config['database'],
+			'username' => $db_config['username'],
+			'password' => $db_config['password'],
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',

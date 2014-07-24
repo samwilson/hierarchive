@@ -1,0 +1,43 @@
+{
+	"name": "samwilson/hierarchive",
+	"description": "A hierarchical file archiving system.",
+	"license": "GPL-3.0+",
+	"authors": [
+		{
+			"name": "Sam Wilson",
+			"email": "swilson@utilityasset.com.au",
+			"role": "developer"
+		}
+	],
+	"require": {
+		"michelf/php-markdown": "1.4.0",
+		"kohana/core": "3.3.2",
+		"kohana/unittest": "3.3.2",
+		"kohana/auth": "3.3.2",
+		"kohana/cache": "3.3.2",
+		"kohana/database": "3.3.2",
+		"kohana/image": "3.3.2",
+		"kohana/minion": "3.3.2",
+		"keboola/csv": "1.1.3",
+		"zeelot/kohana-media": "1.3.*@dev",
+		"morgan/kohana-storage": "composer-dev",
+		"teambox/free-file-icons": "1"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/samwilson/kohana-storage"
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "teambox/free-file-icons",
+				"version": "1",
+				"dist": {
+					"url": "https://github.com/teambox/Free-file-icons/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		}
+	]
+}

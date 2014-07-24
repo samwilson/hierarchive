@@ -1,5 +1,8 @@
-/nbproject/private/
-/tmp/*
+nbproject/private
+tmp
 .htaccess
 config.php
-
+vendor
+modules
+storage
+media

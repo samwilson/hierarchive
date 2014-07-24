@@ -3,6 +3,9 @@
 defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
+// Composer autoload
+require 'vendor/autoload.php';
+
 // Load the core Kohana class
 require SYSPATH . 'classes/Kohana/Core' . EXT;
 
@@ -69,6 +72,7 @@ I18n::lang('en-us');
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
+Kohana::$environment = Kohana::PRODUCTION;
 if (isset($_SERVER['KOHANA_ENV']))
 {
 	Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
@@ -95,46 +99,63 @@ Kohana::init(array(
 	'index_file' => '',
 ));
 
-/**
- * Attach the file write to logging. Multiple writers are supported.
+/*
+ * Try to create log directory.
  */
-Kohana::$log->attach(new Log_File(DOCROOT . 'tmp/logs'));
+$log_dir = DOCROOT . 'tmp/logs';
+if (!file_exists($log_dir))
+{
+	// Create directory, after the precedent of Kohana_Core::init();
+	mkdir($log_dir, 0755, TRUE);
+	chmod($log_dir, 0755);
+}
+// Attach the file write to logging. Multiple writers are supported.
+Kohana::$log->attach(new Log_File($log_dir));
+unset($log_dir);
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
 Kohana::$config->attach(new Config_File);
 
-Cookie::$salt = Hierarchive::$cookie_salt;
+Cookie::$salt = $cookie_salt;
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	'auth' => MODPATH . 'auth', // Basic authentication
-	'database' => MODPATH . 'database', // Database access
+	'auth' => MODPATH . 'auth',
+	'database' => MODPATH . 'database',
+	'storage' => DOCROOT.'/vendor/morgan/kohana-storage',
+	'media' => DOCROOT.'/vendor/zeelot/kohana-media',
+	'image' => MODPATH . 'image',
 ));
 
-
-/**
- * Set the routes. Each route must have a minimum of a name, a URI and a set of
- * defaults for the URI.
- */
-Route::set('new', 'new')->defaults(array(
-	'controller' => 'resources',
-	'action' => 'edit',
-	'id' => NULL,
-));
-Route::set('resource', '<id>(/<action>)', array(
+Route::set('category', 'c<id>(/<action>)', array(
 	'id' => '[0-9]+',
 	'action' => '(view|edit)',
 ))->defaults(array(
-	'controller' => 'resources',
+	'controller' => 'categories',
 	'action' => 'view',
 ));
+Route::set('file', '<id>(/<action>)', array(
+	'id' => '[0-9]+',
+	'action' => '(view|edit)',
+))->defaults(array(
+	'controller' => 'files',
+	'action' => 'view',
+));
+Route::set('render', '<id>(/<size>)(.<ext>)', array(
+	'id' => '[0-9]+',
+	'size' => '('.Model_File::SIZE_ICON.'|'.Model_File::SIZE_THUMB.'|'.Model_File::SIZE_SMALL.'|'.Model_File::SIZE_LARGE.'|'.Model_File::SIZE_ORIGINAL.')',
+))->defaults(array(
+	'controller' => 'files',
+	'action' => 'render',
+	'ext' => '',
+	'size' => 'original',
+));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
-		->defaults(array(
-			'controller' => 'resources',
-			'action' => 'view',
-			'id' => 1,
-		));
+->defaults(array(
+	'controller' => 'categories',
+	'action' => 'index',
+));

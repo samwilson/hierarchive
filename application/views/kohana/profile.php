@@ -35,7 +35,7 @@ $application_cols = array('min', 'max', 'average', 'current');
 				<div>
 					<div class="value"><?php echo number_format($stats[$key]['time'], 6) ?> <abbr title="seconds">s</abbr></div>
 					<?php if ($key === 'total'): ?>
-						<div class="graph" style="left: <?php echo max(0, 100 - $stats[$key]['time'] / $group_stats[$group]['max']['time'] * 100) ?>%"></div>
+						<div class="graph" style="left: <?php //echo max(0, 100 - $stats[$key]['time'] / $group_stats[$group]['max']['time'] * 100) ?>%"></div>
 					<?php endif ?>
 				</div>
 			</td>
